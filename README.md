@@ -1,1 +1,0 @@
-# joga-porg1
