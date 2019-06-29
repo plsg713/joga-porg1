@@ -32,7 +32,8 @@
 \usepackage{epsfig}                %% or use the epsfig package if you prefer to use the old commands
 \usepackage{graphics}              %% use the graphics package for simple commands
 \usepackage{graphicx}              %% or use the graphicx package for more complicated commands
-\usepackage{epstopdf}              %% enable EPS (convert to PDF)
+\usepackage{epstopdf} 
+\usepackage{listings}
 
 
 
@@ -183,350 +184,69 @@
 %%------------------------------------------------------
 %% Section
 \section{Introdução}
-A linguagem utilizada para a programação do jogo foi C,  sendo utilizado o linux para a implementação do código.O  jogo consiste em um labirinto de três fases. O objetivo do jogo é passar as três fases no menor tempo possível, e sem tocar no inimigo que se move de forma pseudo aleatória. O jogo não possui interface gráfica,apenas caracteres/símbolos no terminal,a cada movimento do personagem  é emitido um beep. No fim da terceira fase o tempo é imprimido na tela indicando os segundos  que passaram para percorrer as três fases.
-
-
-
-
-
-
-
-
+Este documento tem por objetivo descrever o desenvolvimento da criação de um jogo, baseado nas aulas lecionadas pelo professor Wyllian Bezerra da Silva da matéria de Programação I. O jogo foi criado a partir dos jogos PacMan e The Escapist, sendo aproveitado detalhes diferentes de cada um dos jogos. O jogo foi desenvolvido utilizando a linguagem de programação C. Para a execução deste trabalho apenas é necessário um computador com máquina virtual Ubuntu instalada, e em correto funcionamento. 
 
 %%------------------------------------------------------
 %% Section
-\section{Metodologia}
-Para jogar é utilizado apenas o teclado, sendo a movimentação da seguinte forma: 'w' :movimento para cima, 's': movimento para baixo, 'd': movimento para direita e 'a': movimento para esquerda. A tecla 'x' é utilizada para sair do jogo, já a tecla 'r' para reiniciar.
+\section{Pac man}
+A mecânica do jogo é simples: o jogador é uma cabeça redonda com uma boca que se abre e fecha, posicionado em um labirinto simples repleto de pastilhas e 4 fantasmas que o perseguem. O objetivo é comer todas as pastilhas sem ser alcançado pelos fantasmas, em ritmo progressivo de dificuldade. 
 
 
-\section{Codificação estruturada}
-\begin{verbatim}
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <string.h>
-#include <unistd.h>
+%%--------------------------------------------------------
+%% Section
+\section{The Escapists}
+The Escapists é uma simulação de fuga de presídio premiada que dá ao jogador a oportunidade de experimentar de forma divertida a vida diária na prisão. O objetivo do jogo é simplesmente fugir. 
 
-int i= 1;
-int j= 0;
-int x=18;
-int y=12;
-int mapa[20][16];
-char fase=1;
-time_t seconds;
-time_t actual;
+%%---------------------------------------------------------
+%% Section
+\section{O Jogo}
+O jogo consiste em um labirinto de três fases. O objetivo do jogo é passar as três fases no menor tempo possível, e sem tocar no inimigo que se move de forma pseudo aleatória. O jogo não possui interface gráfica, apenas caracteres/símbolos no terminal, a cada movimento do personagem é emitido um beep. No fim da terceira fase o tempo é imprimido na tela indicando os segundos que passaram para percorrer as três fases. 
+ 
+%%-------------------------------------------------------------
+%% Section
+\section{Movimentação do peronagem}
+O botão A, responsável por mexer nosso personagem para a esquerda, mudara no eixo X do personagem decrementando -1 de j. O botão D, responsável por mexer nosso personagem para a direita, mudara no eixo X do personagem incrementando 1 no j. O botão W, responsável por mexer nosso personagem para cima, mudara no eixo Y do personagem decrementando -1 em i. O botão S, responsável por mexer nosso personagem para baixo, mudara no eixo Y do personagem  incrementando 1 no i. Deve-se levar em consideração que quando mandamos o personagem para uma nova posição, quando for uma parede ele continua na mesma posição e quando for a saída ele muda de fase ou ganha o jogo. 
 
-int mapa1[20][16] = {
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
-{1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1},
-{1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1},
-{1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1},
-{1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-{1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
-{1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1},
-{1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-{1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
-{1,0,1,1,1,1,1,0,1,1,1,1,1,0,1,1},
-{1,0,1,1,1,1,1,0,0,1,1,1,1,0,1,1},
-{1,0,0,1,1,1,1,1,0,1,1,1,1,0,1,1},
-{1,0,0,1,1,1,1,1,0,0,0,0,0,0,1,1},
-{1,1,0,1,1,1,1,1,1,1,1,1,0,1,1,1},
-{1,0,0,0,0,0,0,0,1,1,1,1,0,1,1,1},
-{1,1,1,1,1,1,1,0,0,0,0,0,0,0,2,1},
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-
- };
-int mapa2[20][18] = {
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
-{1,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1},
-{1,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1},
-{1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,1,1,1,1,1,1,1,1,1,0,1,1,0,1},
-{1,0,1,1,1,1,1,1,1,1,1,0,1,1,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1},
-{1,1,0,1,1,1,1,1,1,0,1,1,1,0,1,1},
-{1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,1},
-{1,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1},
-{1,0,1,1,1,1,0,1,1,1,1,1,1,0,1,1},
-{1,0,1,1,1,1,0,0,0,0,0,0,0,0,1,1},
-{1,0,1,1,1,1,0,1,1,0,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,1,1,0,0,0,0,0,2,1},
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
- };
- int mapa3[20][16] = {
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1},
-{1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,1,1,1,1,1,1,0,1,1,1,1,1,0,1},
-{1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1},
-{1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1},
-{1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1},
-{1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-{1,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1},
-{1,0,0,0,0,0,0,0,0,1,1,1,1,1,0,1},
-{1,1,1,0,1,1,1,1,0,0,0,0,0,0,0,1},
-{1,1,1,0,0,0,1,1,0,1,1,1,1,1,1,1},
-{1,1,1,1,1,0,1,1,0,1,1,1,1,1,1,1},
-{1,1,1,1,1,0,0,0,0,0,0,0,0,0,2,1},
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
- };
-
-void labirinto()
- {
-   int linha,coluna;
-
-if(fase==1){
-for (linha=0;linha<20;linha++) {
-for (coluna=0;coluna<16;coluna++) {
- mapa[linha][coluna]=mapa1[linha][coluna];
-    }
-    }
-}
-if(fase==2){
-for (linha=0;linha<20;linha++) {
-for (coluna=0;coluna<16;coluna++) {
-mapa[linha][coluna]=mapa2[linha][coluna];
-           }
-         }
-       }
-if (fase==3){
-for (linha=0;linha<20;linha++) {
-for (coluna=0;coluna<16;coluna++) {
-mapa[linha][coluna]=mapa3[linha][coluna];
-            }
+\begin{lstlisting}  
+        if (movimento == 'w') {  
+          if (mapa[i-1][j]==0){ 
+           system("\abeep"); 
+           mapa[i][j]=0; 
+           i = i-1; 
+         }else if (mapa[i-1][j]==1){    } 
+          else if (mapa[i-1][j]==2){ 
+          return 1;
           }
-       }
-for (linha=0;linha<20;linha++) {
-for (coluna=0;coluna<16;coluna++) {
-if ((linha == i) && (coluna == j)) {
-printf("\033[1;35m");
-printf("^");
-printf("\033[0m");
-continue;
-    }
-if ((linha == x) && (coluna == y)) { 
-printf("\033[1;35m");
-printf("▓");
-printf("\033[0m");
-continue;
- }
-if (mapa[linha][coluna] == 0) 
-printf(" ");
-if (mapa[linha][coluna] == 1)
-{printf("\033[1;31m");
-printf("▓");
-printf("\033[0m");}
-              
-if (mapa[linha][coluna] == 2)
-{printf("\033[1;32m");
-printf("▓");
-printf("\033[0m");}
- }
-printf("\n");
-         }
-    }
-int move_enemy(){
-char movimentoE= rand()%4;
-if(movimentoE==0){ 
-if(mapa[x-1][y]==0){
-mapa[x][y]=0;
-x=x-1;
-}else if ((mapa[x-1][y]==1)||(mapa[x-1][y]==2)){
-
-}
-}
-if(movimentoE==1){
-if(mapa[x+1][y]==0){ 
- mapa[x][y]=0;
-x=x+1;
-}else if ((mapa[x+1][y]==1)||(mapa[x+1][y]==2)){
-            }
-    }
- if(movimentoE==2){
- if(mapa[x][y-1]==0){
-    mapa[x][y]=0;
-    y=y-1;
- }else if ((mapa[x][y-1]==1)||(mapa[x][y-1]==2)){
-  }
- }
- if(movimentoE==3){
-    if(mapa[x][y+1]==0){
-     mapa[x][y]=0;
-        y=y+1;
-        }else if (mapa[x][y+1]==1){}
-         else if (mapa[x][y+1]==2){}
-    }
-     if(i == x && j == y){
-     system("clear");
-     char debug; i=1;j=0;x=1;y=2; 
-     fase = 1; 
-     while(debug != 'r'){
-     scanf("%c",&debug); 
-     system("clear");
-     printf("FIM DE JOGO");                                         if(debug == 'x')
-       exit(0);} }
-}
-
-
-int move(char movimento)
-{if (movimento == 'w') { 
-if (mapa[i-1][j]==0){
-system("\abeep");
-mapa[i][j]=0;
-i = i-1;
-
- }else if (mapa[i-1][j]==1){   
-     }
-else if (mapa[i-1][j]==2){
-return 1;
-     }
-}
-if (movimento == 's')  {
-if (mapa[i+1][j]==0){
-system("\abeep");
-mapa[i][j]=0;
-i= i+1;
-}else if(mapa[i+1][j]==1){
-}else if(mapa[i+1][j]==2){
- return 1;
- }
- }
-if (movimento == 'd') {
- if(mapa[i][j+1]==0){
-system("\abeep");
-mapa[i][j]=0;
-j=j+1;
-}else if(mapa[i][j+1]==1){
-}else if (mapa[i][j+1]==2){
-return 1;
- }
- }
-if (movimento == 'a') {
-if(mapa[i][j-1]==0){
-system("\abeep");
- mapa[i][j]=0;
- j=j-1;
- }else if (mapa[i][j-1]==1){
-
-}else if(mapa[i][j-1]==2){
-system("clear");
-          
- return 1;
-        }
- }
-    if(i == x && j == y){
-    system("clear");
-    char debug; 
-    i=1;j=0;x=18;y=12; 
-    fase = 1; 
-    while(debug != 'r'){
-    scanf("%c",&debug); 
-    system("clear");
-    printf("FIM DE JOGO");                                          if(debug == 'x') 
-    exit(0);}seconds = time(NULL); }
-	return 0;
-
-}
-
-
-
-
-
-
-void imprime_inicio()
-
-{
-system("clear");
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###         ###  ###############                                                           \n"); usleep (100000); printf("\033[0;32m");
-printf("   ###############  ###         ###  ###############                                                           \n"); usleep (100000); printf("\033[0;33m");
-printf("         ###        ###         ###  ###                                                                       \n"); usleep (100000); printf("\033[0;34m");
-printf("         ###        ###############  ##########                                                                \n"); usleep (100000); printf("\033[0;35m");
-printf("         ###        ###############  ##########                                                                \n"); usleep (100000);
-printf("\033[1;35m");
-printf("         ###        ###         ###  ###                                                                       \n"); usleep (100000);
-printf("\033[0;36m");
-printf("         ###        ###         ###  ###                                                                       \n"); usleep (100000);
-printf("\033[1;32m");
-printf("         ###        ###         ###  ###############                                                           \n"); usleep (100000);
-printf("\033[0;31m");
-printf("         ###        ###         ###  ###############                                                           \n"); usleep (100000);
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###############  ###############  ###############  ###  ###############  ###############   \n"); usleep (100000);
-printf("\033[0;32m");
-printf("   ###############  ###############  ###############  ###############  ###  ###############  ###############   \n"); usleep (100000);
-printf("\033[0;33m");
-printf("   ###              ###              ###         ###  ###         ###  ###  ###                    ###         \n"); usleep (100000);
-printf("\033[0;34m");
-printf("   ###############  ###              ###############  ###############  ###  ###############        ###         \n"); usleep (100000);
-printf("\033[0;35m");
-printf("   ###############  ###              ###############  ###############  ###  ###############        ###         \n"); usleep (100000);
-printf("               ###  ###              ###         ###  ###              ###              ###        ###         \n"); usleep (100000);
-printf("\033[0;31m");
-printf("               ###  ###              ###         ###  ###              ###              ###        ###         \n"); usleep (100000);
-printf("\033[1;35m");
-printf("   ###############  ###############  ###         ###  ###              ###  ###############        ###         \n"); usleep (100000);
-printf("\033[0;36m");
-printf("   ###############  ###############  ###         ###  ###              ###  ###############        ###         \n"); usleep (100000);
-printf("\033[0;31m");
-printf("                                                                                                               \n"); usleep (100000);
-
-}
-
-int timer()
-{
-	actual = time(NULL);
-	int now = (int)difftime(actual,seconds);
-	return now;
-}
-    int main(){
-    char movimento;	
-    seconds = time(NULL);
-    imprime_inicio();
-    while (1){
-    system("clear");
-    printf("\t      Time:%d\n", timer());
-    move_enemy();//
-    labirinto();
-    printf("\n Aperte (x) para sair do Jogo");
-    scanf("%c", &movimento);
-    if(movimento=='x') break;
-         else if(move(movimento) == 1){
-          fase+=1;
-          i=1;
-          j=0;	
-   if(fase>3){
-   printf("tempo:%d segundos", timer());
-      break;
-	}
-      }
-    }
-
-    return(0);
-}
-\end{verbatim}
-
-
-
-%%------------------------------------------------------
+          }
+          \end{lstlisting}
+%% ----------------------------------------------------------
 %% Section
-\section{Conclusão }
-A utilização de recursos da programação nos permite, criar  de programas simples a jogos complexos,além de nos ajudar a realizar nossos trabalhos de forma mais rápida e eficiente. A partir desse projeto foi possivel aprender na prática toda a teoria passada durante as aulas de Programação I, e a buscar conhecimentos além do que nos foi imposto.
+\section{Movimentação do inimigo}
+Utilizando a mesma lógica que foi utilizada para movimentar o personagem, foi possível criar a movimentação do inimigo. Para mudar a posição do personagem utilizamos as teclas: w, a, s, d, que indicam respectivamente: para cima, esquerda, direita, para baixo. Na movimentação do inimigo usamos a função rand(), que é responsável por gerar números aleatórios. Através dela geramos 4 números de 0 a 3, cada um desses 4 números gerar um movimento diferente. Através do número 0 o inimigo de move para cima, 1 o inimigo se move para baixo, 2 o inimigo se move para a direita e 3 o inimigo de move para a esquerda. 
 
+\begin{lstlisting}  
+ int moveEnemy(){
+ char movimentoE= rand()%4;
+   if(movimentoE==0){
+    if(mapa[x-1][y]==0){
+      mapa[x][y]=0;
+      x=x-1;
+  }else if ((mapa[x-1][y]==1)||(mapa[x-1][y]==2)){
+     }
+   }
+}
+         \end{lstlisting}
+         
+%% ----------------------------------------------------------
+%% Section
+\section{Resultados}
+Através desse projeto é nítido a evolução no conhecimento em relação a matéria de Programação I, pois além do conteúdo visto em aula, foi necessário a pesquisa de alguns itens até então não conhecidos. O jogo atendeu cerca de 95\% do que foi proposto na descrição inicial que foi postada, o que é satisfatório. 
 
+%%--------------------------------------------------
+%% Section
+
+\section{Conclusão}
+A utilização de recursos da programação nos permite, criar de programas simples a jogos complexos, além de nos ajudar a realizar nossos trabalhos de forma mais rápida e eficiente. A partir desse projeto foi possível aprender na prática toda teoria passada durante as aulas de programação I, e a buscar conhecimento além do que nos foi imposto. 
 
 
 
