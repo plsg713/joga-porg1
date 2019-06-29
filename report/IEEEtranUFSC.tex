@@ -1,0 +1,303 @@
+%%------------------------------------------------------
+% 
+%% UNIVERSIDADE FEDERAL DE SANTA CATARINA - UFSC
+%
+%% Prof.: Wyllian B. da Silva
+%%
+%% Template: estilo IEEEtran [paper com duas colunas]
+%% Adaptado de: https://ieeeauthorcenter.ieee.org/create-your-ieee-article/use-authoring-tools-and-ieee-article-templates/ieee-article-templates/templates-for-transactions/
+%               https://ctan.org/tex-archive/macros/latex/contrib/IEEEtran?lang=en
+
+%% Instruções: http://mirrors.ctan.org/macros/latex/contrib/IEEEtran/IEEEtran_HOWTO.pdf
+%%
+%% Recomendações:
+%% Utilize o Edito Kile (SO Linux)
+%% Certifique-se de que a codificação de caracteres utilizada é a UTF-8
+
+
+
+
+
+\documentclass[journal]{IEEEtran}
+
+
+%%------------------------------------------------------
+%% Packages
+%%------------------------------------------------------
+
+\usepackage[utf8]{inputenc}        %% Codificação de caracteres (conversão automática dos acentos)
+\usepackage[dvips]{graphicx}       %% para a macro includegraphics 
+\usepackage[english,brazil]{babel} %% PT_BR e EN (o último define a prioridade no arquivo)
+\usepackage{pgf}                   %% macro para criar gráficos
+\usepackage{epsfig}                %% or use the epsfig package if you prefer to use the old commands
+\usepackage{graphics}              %% use the graphics package for simple commands
+\usepackage{graphicx}              %% or use the graphicx package for more complicated commands
+\usepackage{epstopdf} 
+\usepackage{listings}
+
+
+
+\usepackage{hyperref}              %% enalbe one-click link
+
+% \usepackage{showframe} %% just for the example
+
+% \usepackage[sort,compress]{cite} %% disable if natbib package is activated
+
+
+
+
+%%------------------------------------------------------
+%% Definitions
+%%------------------------------------------------------
+
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+%% Can use something like this to put references on a page
+%% by themselves when using endfloat and the captionsoff option.
+\ifCLASSOPTIONcaptionsoff
+  \newpage
+\fi
+
+
+%%----------------- Definindo as variáveis com números
+\makeatletter
+%
+\newcommand{\prenome}{\afterassignment\prenome@aux\count0=}
+\newcommand{\prenome@aux}{\csname prenome\the\count0\endcsname}
+%
+\newcommand{\nomedomeio}{\afterassignment\nomedomeio@aux\count0=}
+\newcommand{\nomedomeio@aux}{\csname nomedomeio\the\count0\endcsname}
+%
+\newcommand{\sobrenome}{\afterassignment\sobrenome@aux\count0=}
+\newcommand{\sobrenome@aux}{\csname sobrenome\the\count0\endcsname}
+\makeatother
+%%%%%
+
+%%----------------- Configurações de hyperlinks
+%% Não decorado, sem destaque
+\hypersetup{
+  colorlinks=false,
+  pdfborder={0 0 0},
+}
+
+
+
+
+%%------------------------------------------------------
+%% Configurações
+%%------------------------------------------------------
+
+%%----------------- Título
+\title                                                {PROJETO GAME-THE SCAPIST}{}
+\author{
+  Jaqueline Cristina da Rosa  \thanks{Use footnote for providing further
+    information about author (webpage, alternative
+    address)---\emph{not} for acknowledging funding agencies.} \\
+  Bacharelado em Ciências e Tecnologia \\
+  Universidade Federal de Santa Catarina\\
+  jaqueline_rosa06@hotmail.com\\
+  \texttt{}
+  %% examples of more authors
+   \And
+ \\Pedro Lucas Sousa Gonçalves \\
+  Engenharia Ferroviária e Metroviária\\
+  Universidade Federal de Santa Catarina\\
+  pedrolucas.2713.sg@gmail.com \\
+  \texttt{}
+  %% \AND
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+  %% \And
+  %% Coauthor \\
+  %% Affiliation \\
+  %% Address \\
+  %% \texttt{email} \\
+}
+
+\newcommand{\emailautor}                              {seuemail@grad.ufsc.br}
+
+\newcommand{\siglaRevista}                            {}
+
+\newcommand{\Revista}                                 {Universidade Federal de Santa Catarina (UFSC)}
+
+
+
+
+
+
+
+% %%----------------- Vários Autores
+% \author{\IEEEauthorblockN{\prenomePrincipal~\nomedomeioPrincipal~\sobrenomePrincipal\IEEEauthorrefmark{1}, 
+% \prenome2~\nomedomeio2~\sobrenome2\IEEEauthorrefmark{2}, 
+% \prenome3~\nomedomeio3~\sobrenome3\IEEEauthorrefmark{3}, 
+% \prenome4~\nomedomeio4~\sobrenome4\IEEEauthorrefmark{3}, and 
+% \prenome5~\nomedomeio5~\sobrenome5\IEEEauthorrefmark{4},~\IEEEmembership{Fellow,~IEEE}}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{1}Universidade Federal de Santa Catarina (UFSC)}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{2}School of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta, GA 30332 USA}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, CA 96678 USA}
+% 
+% \IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, CA 90210 USA}% <-this % stops an unwanted space
+% %%
+% \thanks{\Revista~(\siglaRevista). Correspond\^encia ao autor: \prenomePrincipal~\nomedomeioPrincipal~\sobrenomePrincipal~(email: \emailautor).}}
+
+
+
+%%------------------------------------------------------
+%% Cabeçalho
+\markboth{\MakeUppercase{\Revista}}%% acentuação indireta
+%% Apenas um autor:
+{\sobrenomePrincipal: \MakeUppercase{\Revista}}
+%% Mais de um autor:
+% {\sobrenomePrincipal: \MakeLowercase{\textit{et al.}}: \Revista}
+
+
+
+
+ 
+
+
+
+
+
+
+\begin{document}
+
+
+
+%%------------------------------------------------------
+%% Inserção de informações
+\maketitle
+\IEEEdisplaynontitleabstractindextext
+\IEEEpeerreviewmaketitle
+
+
+%%------------------------------------------------------
+%% Section
+\section{Introdução}
+Este documento tem por objetivo descrever o desenvolvimento da criação de um jogo, baseado nas aulas lecionadas pelo professor Wyllian Bezerra da Silva da matéria de Programação I. O jogo foi criado a partir dos jogos PacMan e The Escapist, sendo aproveitado detalhes diferentes de cada um dos jogos. O jogo foi desenvolvido utilizando a linguagem de programação C. Para a execução deste trabalho apenas é necessário um computador com máquina virtual Ubuntu instalada, e em correto funcionamento. 
+
+%%------------------------------------------------------
+%% Section
+\section{Pac man}
+A mecânica do jogo é simples: o jogador é uma cabeça redonda com uma boca que se abre e fecha, posicionado em um labirinto simples repleto de pastilhas e 4 fantasmas que o perseguem. O objetivo é comer todas as pastilhas sem ser alcançado pelos fantasmas, em ritmo progressivo de dificuldade. 
+
+
+%%--------------------------------------------------------
+%% Section
+\section{The Escapists}
+The Escapists é uma simulação de fuga de presídio premiada que dá ao jogador a oportunidade de experimentar de forma divertida a vida diária na prisão. O objetivo do jogo é simplesmente fugir. 
+
+%%---------------------------------------------------------
+%% Section
+\section{O Jogo}
+O jogo consiste em um labirinto de três fases. O objetivo do jogo é passar as três fases no menor tempo possível, e sem tocar no inimigo que se move de forma pseudo aleatória. O jogo não possui interface gráfica, apenas caracteres/símbolos no terminal, a cada movimento do personagem é emitido um beep. No fim da terceira fase o tempo é imprimido na tela indicando os segundos que passaram para percorrer as três fases. 
+ 
+%%-------------------------------------------------------------
+%% Section
+\section{Movimentação do peronagem}
+O botão A, responsável por mexer nosso personagem para a esquerda, mudara no eixo X do personagem decrementando -1 de j. O botão D, responsável por mexer nosso personagem para a direita, mudara no eixo X do personagem incrementando 1 no j. O botão W, responsável por mexer nosso personagem para cima, mudara no eixo Y do personagem decrementando -1 em i. O botão S, responsável por mexer nosso personagem para baixo, mudara no eixo Y do personagem  incrementando 1 no i. Deve-se levar em consideração que quando mandamos o personagem para uma nova posição, quando for uma parede ele continua na mesma posição e quando for a saída ele muda de fase ou ganha o jogo. 
+
+\begin{lstlisting}  
+        if (movimento == 'w') {  
+          if (mapa[i-1][j]==0){ 
+           system("\abeep"); 
+           mapa[i][j]=0; 
+           i = i-1; 
+         }else if (mapa[i-1][j]==1){    } 
+          else if (mapa[i-1][j]==2){ 
+          return 1;
+          }
+          }
+          \end{lstlisting}
+%% ----------------------------------------------------------
+%% Section
+\section{Movimentação do inimigo}
+Utilizando a mesma lógica que foi utilizada para movimentar o personagem, foi possível criar a movimentação do inimigo. Para mudar a posição do personagem utilizamos as teclas: w, a, s, d, que indicam respectivamente: para cima, esquerda, direita, para baixo. Na movimentação do inimigo usamos a função rand(), que é responsável por gerar números aleatórios. Através dela geramos 4 números de 0 a 3, cada um desses 4 números gerar um movimento diferente. Através do número 0 o inimigo de move para cima, 1 o inimigo se move para baixo, 2 o inimigo se move para a direita e 3 o inimigo de move para a esquerda. 
+
+\begin{lstlisting}  
+ int moveEnemy(){
+ char movimentoE= rand()%4;
+   if(movimentoE==0){
+    if(mapa[x-1][y]==0){
+      mapa[x][y]=0;
+      x=x-1;
+  }else if ((mapa[x-1][y]==1)||(mapa[x-1][y]==2)){
+     }
+   }
+}
+         \end{lstlisting}
+         
+%% ----------------------------------------------------------
+%% Section
+\section{Resultados}
+Através desse projeto é nítido a evolução no conhecimento em relação a matéria de Programação I, pois além do conteúdo visto em aula, foi necessário a pesquisa de alguns itens até então não conhecidos. O jogo atendeu cerca de 95\% do que foi proposto na descrição inicial que foi postada, o que é satisfatório. 
+
+%%--------------------------------------------------
+%% Section
+
+\section{Conclusão}
+A utilização de recursos da programação nos permite, criar de programas simples a jogos complexos, além de nos ajudar a realizar nossos trabalhos de forma mais rápida e eficiente. A partir desse projeto foi possível aprender na prática toda teoria passada durante as aulas de programação I, e a buscar conhecimento além do que nos foi imposto. 
+
+
+
+
+
+%%------------------------------------------------------
+%% Section (no numbering, use section* for acknowledgment)
+%% UFSC: no necessary
+% \section*{Acknowledgment}
+% The authors would like to thank...
+
+
+
+%%------------------------------------------------------
+%% References (Option 1): extern file
+%% Edit with JabRef, for instance
+\bibliographystyle{IEEEtran} %% Estilo da referência
+\bibliography{references}    %% Caminho do arquivo (sem extensão)
+
+
+
+% %%------------------------------------------------------
+% %% References (Option 2): incorporeted
+% 
+% \begin{thebibliography}{10} 
+% 
+%   \bibitem{Kopka:1999}
+%     H.~Kopka and P.~W. Daly, \emph{A Guide to
+%     \LaTeX}, 3rd~ed. Harlow, 
+%     England: Addison-Wesley, 1999.
+% 
+%   \bibitem{Huynen:1998} 
+%     Huynen, M.~A. and Bork, P. 1998. Measuring 
+%     genome evolution. {\em Proceedings of the 
+%     National Academy of Sciences USA} 
+%     95:5849--5856.
+% 
+%   \bibitem{Caprara:1997} 
+%     Caprara, A. 1997. Sorting by reversals is 
+%     difficult. In: {\em Proceedings of the 
+%     First Annual International Conference on 
+%     Computational Molecular Biology 
+%     (RECOMB 97),} New York: ACM.  pp. 75-83.
+% 
+%   \bibitem{Reinelt:1991}
+%     Reinelt, G. 1991. {\em The Traveling 
+%     Salesman -- Computational Solutions for TSP 
+%     Applications.} Berlin: Springer Verlag.
+% 
+% \end{thebibliography}
+
+
+
+\end{document}
