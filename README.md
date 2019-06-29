@@ -1,4 +1,4 @@
-# jogo-porg1
+# jogo-prog1
 Este documento tem por objetivo descrever o desenvolvimento da criação de um jogo, basiado nas aulas lecionadas pelo professor Wyllian Bezerra da Silva da matéria de Programção I.
 O código compõe o projeto final da disciplina de Programação I na Universidade Federal de Santa Catarina - Centro Tecnológico de Jonville
 ## THE SCAPIST
