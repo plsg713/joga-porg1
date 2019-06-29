@@ -1,0 +1,12 @@
+ Bibliotecas usadas:
+
+#include <stdio.h> (é um cabeçalho da biblioteca padrão do C. Seu nome vem da expressão inglesa standard input-output header, que significa "cabeçalho padrão de entrada/saída") 
+
+#include <stdlib.h> (é um arquivo cabeçalho da biblioteca de propósito geral padrão da linguagem de programação C. Ela possui funções envolvendo alocação de memória, controle de processos, conversões e outras.
+
+#include <time.h> (é um arquivo cabeçalho da biblioteca de propósito geral padrão da linguagem de programação C. Ela possui funções envolvendo alocação de memória, controle de processos, conversões e outras.
+
+#include <string.h>(é um arquivo cabeçalho que fornece funções, macros e definições da biblioteca padrão da linguagem de programação C para manipulação de cadeias de caracteres e regiões de memória)
+
+#include <unistd.h>( Utilizada para a Função usleep)
+
