@@ -15,7 +15,7 @@ time_t actual;
 
  int mapa1[20][16] = {
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
 {1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1},
 {1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1},
 {1,0,0,0,0,0,0,1,1,0,0,0,0,1,1,1},
@@ -38,7 +38,7 @@ time_t actual;
  };
 int mapa2[20][18] = {
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
+{0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1},
 {1,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1},
 {1,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -60,7 +60,7 @@ int mapa2[20][18] = {
  };
  int mapa3[20][16] = {
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 {1,1,1,1,1,1,0,1,1,1,1,1,1,1,0,1},
@@ -110,13 +110,13 @@ int mapa2[20][18] = {
        }
           for (linha=0;linha<20;linha++) {
             for (coluna=0;coluna<16;coluna++) {
-              if ((linha == i) && (coluna == j)) {// se a posição do mapa for igual a do personagem, imprime a posição do personagem.
+              if ((linha == i) && (coluna == j)) {
                  printf("\033[1;35m");
                  printf("^");
                  printf("\033[0m");
                 continue;
                 }
-                if ((linha == x) && (coluna == y)) { // se a posição do mapa for igual a do personagem, imprime a posição do inimigo.
+                if ((linha == x) && (coluna == y)) { 
                  printf("\033[1;35m");
                  printf("▓");
                  printf("\033[0m");
@@ -136,63 +136,52 @@ int mapa2[20][18] = {
             printf("\n");
          }
     }
- int move_enemy(){// Função para o movimento do inimigo.
- char movimentoE= rand()%4;// rand() vai gerar números aletórios, fazendo com que o inimigo ande aleatoriamente pelo mapa.
-    if(movimentoE==0){ // se o numero gerado for igual a zero, e mapa=0 o inimigo se movimentará para cima.
+ int move_enemy(){
+ char movimentoE= rand()%4;
+    if(movimentoE==0){ 
             if(mapa[x-1][y]==0){
             mapa[x][y]=0;
             x=x-1;
-            }else if ((mapa[x-1][y]==1)||(mapa[x-1][y]==2)){// se o mapa=1 ou 2, o inimigo faz nada.
-
+            }else if ((mapa[x-1][y]==1)||(mapa[x-1][y]==2)){
             }
     }
-    if(movimentoE==1){// se o numero gerado for igual a 1, e mapa=0 o inimigo se movimentará para baixo.
+    if(movimentoE==1){
             if(mapa[x+1][y]==0){ 
             mapa[x][y]=0;
             x=x+1;
-            }else if ((mapa[x+1][y]==1)||(mapa[x+1][y]==2)){// se o mapa=1 ou 2, o inimigo faz nada.
+            }else if ((mapa[x+1][y]==1)||(mapa[x+1][y]==2)){
             }
     }
-   if(movimentoE==2){// se o numero gerado for igual a 2, e mapa=0 o inimigo se movimentará para direita.
+   if(movimentoE==2){
     if(mapa[x][y-1]==0){
         mapa[x][y]=0;
         y=y-1;
-    }else if ((mapa[x][y-1]==1)||(mapa[x][y-1]==2)){// se o mapa=1 ou 2, o inimigo faz nada.
+    }else if ((mapa[x][y-1]==1)||(mapa[x][y-1]==2)){
   }
  }
- if(movimentoE==3){// se o numero gerado for igual a 3, e mapa=0 o inimigo se movimentará para esquerda.
+ if(movimentoE==3){
     if(mapa[x][y+1]==0){
      mapa[x][y]=0;
         y=y+1;
-        }else if (mapa[x][y+1]==1){}// se o mapa=1 ou 2, o inimigo faz nada.
+        }else if (mapa[x][y+1]==1){}
          else if (mapa[x][y+1]==2){}
     }
-     if(i == x && j == y){// se a posição do personagem for igual a do inimigo, vai ser impresso a tela fim de jogo, e se a tecla r for       pressionada o jogo reinicia.
+     if(i == x && j == y){
      system("clear");
      char debug; i=1;j=0;x=1;y=2; 
      fase = 1; 
      while(debug != 'r'){
      scanf("%c",&debug); 
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###  ######     ######       ###########      ###############                              \n"); usleep (100000); 
-printf("   ###############  ###  #######   #######       #############    ###############                              \n"); usleep (100000); 
-printf("   ###              ###  ###  ### ###  ###       ###        ###   ###                                          \n"); usleep (100000);
-printf("   ##########       ###  ###   #####   ###       ###         ###  ###########                                  \n"); usleep (100000); 
-printf("   ##########       ###  ###    ###    ###       ###         ###  ###########                                  \n"); usleep (100000);
-printf("   ###              ###  ###           ###       ###         ###  ###                                          \n"); usleep (100000);
-printf("   ###              ###  ###           ###       ###        ###   ###                                          \n"); usleep (100000);
-printf("   ###              ###  ###           ###       #############    ###############                              \n"); usleep (100000);
-printf("   ###              ###  ###           ###       ###########      ###############                              \n"); usleep (100000);
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###############  ###############  ###############                                          \n"); usleep (100000);
-printf("   ###############  ###############  ###############  ###############                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###              ###         ###                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###              ###         ###                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###    ########  ###         ###                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###    ########  ###         ###                                          \n"); usleep (100000);
-printf("   ###     ###      ###         ###  ###         ###  ###         ###                                          \n"); usleep (100000);
-printf("   ###########      ###############  ###############  ###############                                          \n"); usleep (100000);
-printf("   ###########      ###############  ###############  ###############                                          \n"); usleep (2000000);
+printf("                                   \n"); usleep (100000);
+printf("         #######                   \n"); usleep (100000);
+printf("        #       #                  \n"); usleep (100000);
+printf("       #  R I P  #                 \n"); usleep (100000);
+printf("       #         #                 \n"); usleep (100000);
+printf("       #         #                 \n"); usleep (100000);
+printf("       #         #                 \n"); usleep (100000);
+printf("    #################              \n"); usleep (100000);
+printf(" ###                 ###           \n"); usleep (100000);
+printf(" ------VOCÊ PERDEU------           \n"); usleep (100000);
      if(debug == 'x')
        exit(0);} }
 }
@@ -253,93 +242,97 @@ int move(char movimento)// função para os movimentos dos personagem.
     while(debug != 'r'){
     scanf("%c",&debug); 
     system("clear");
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###  ######     ######       ###########      ###############                              \n"); usleep (100000); 
-printf("   ###############  ###  #######   #######       #############    ###############                              \n"); usleep (100000); 
-printf("   ###              ###  ###  ### ###  ###       ###        ###   ###                                          \n"); usleep (100000);
-printf("   ##########       ###  ###   #####   ###       ###         ###  ###########                                  \n"); usleep (100000); 
-printf("   ##########       ###  ###    ###    ###       ###         ###  ###########                                  \n"); usleep (100000);
-printf("   ###              ###  ###           ###       ###         ###  ###                                          \n"); usleep (100000);
-printf("   ###              ###  ###           ###       ###        ###   ###                                          \n"); usleep (100000);
-printf("   ###              ###  ###           ###       #############    ###############                              \n"); usleep (100000);
-printf("   ###              ###  ###           ###       ###########      ###############                              \n"); usleep (100000);
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###############  ###############  ###############                                          \n"); usleep (100000);
-printf("   ###############  ###############  ###############  ###############                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###              ###         ###                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###              ###         ###                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###    ########  ###         ###                                          \n"); usleep (100000);
-printf("           ###      ###         ###  ###    ########  ###         ###                                          \n"); usleep (100000);
-printf("   ###     ###      ###         ###  ###         ###  ###         ###                                          \n"); usleep (100000);
-printf("   ###########      ###############  ###############  ###############                                          \n"); usleep (100000);
-printf("   ###########      ###############  ###############  ###############                                          \n"); usleep (2000000);
+printf("                                   \n"); usleep (100000);
+printf("         #######                   \n"); usleep (100000);
+printf("        #       #                  \n"); usleep (100000);
+printf("       #  R I P  #                 \n"); usleep (100000);
+printf("       #         #                 \n"); usleep (100000);
+printf("       #         #                 \n"); usleep (100000);
+printf("       #         #                 \n"); usleep (100000);
+printf("    #################              \n"); usleep (100000);
+printf(" ###                 ###           \n"); usleep (100000);
+printf(" ------VOCÊ PERDEU------           \n"); usleep (100000);
     if(debug == 'x') 
     exit(0);}seconds = time(NULL); }
 	return 0;
 
 }
 
-
-
-
-
-
-void imprime_inicio()
-
-{
-system("clear");
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###         ###  ###############                                                           \n"); usleep (100000);
-printf("   ###############  ###         ###  ###############                                                           \n"); usleep (100000); 
-printf("         ###        ###         ###  ###                                                                       \n"); usleep (100000); 
-printf("         ###        ###############  ##########                                                                \n"); usleep (100000); 
-printf("         ###        ###############  ##########                                                                \n"); usleep (100000);
-printf("         ###        ###         ###  ###                                                                       \n"); usleep (100000);
-printf("         ###        ###         ###  ###                                                                       \n"); usleep (100000);
-printf("         ###        ###         ###  ###############                                                           \n"); usleep (100000);
-printf("         ###        ###         ###  ###############                                                           \n"); usleep (100000);
-printf("                                                                                                               \n"); usleep (100000);
-printf("   ###############  ###############  ###############  ###############  ###  ###############  ###############   \n"); usleep (100000);
-printf("   ###############  ###############  ###############  ###############  ###  ###############  ###############   \n"); usleep (100000);
-printf("   ###              ###              ###         ###  ###         ###  ###  ###                    ###         \n"); usleep (100000);
-printf("   ###############  ###              ###############  ###############  ###  ###############        ###         \n"); usleep (100000);
-printf("   ###############  ###              ###############  ###############  ###  ###############        ###         \n"); usleep (100000);
-printf("               ###  ###              ###         ###  ###              ###              ###        ###         \n"); usleep (100000);
-printf("               ###  ###              ###         ###  ###              ###              ###        ###         \n"); usleep (100000);
-printf("   ###############  ###############  ###         ###  ###              ###  ###############        ###         \n"); usleep (100000);
-printf("   ###############  ###############  ###         ###  ###              ###  ###############        ###         \n"); usleep (100000);
-printf("                                                                                                               \n"); usleep (4000000);
-
-}
-
-int timer()// função que calcula o tempo.
+   int timer()
 {
 	actual = time(NULL);
 	int now = (int)difftime(actual,seconds);
 	return now;
 }
-    int main(){// função principal.
-    char movimento;	
-    seconds = time(NULL);
-    imprime_inicio();
-    while (1){
+
+
+
+void main()
+{
+    //menu
+    int opcao,decisao;
+    char movimento;
     system("clear");
-    printf("\t      Time:%d\n", timer());// imprime o cronometro na tela.
-    move_enemy();//
-    labirinto();
-    printf("\n Aperte (x) para sair do Jogo");
-    scanf("%c", &movimento);
-    if(movimento=='x') break;
+    printf("                                                                                                                   \n"); 
+printf("     ########## ##      ## #########                                                                               \n"); 
+printf("         ##     ##      ## ##                                                                                      \n"); 
+printf("         ##     ########## ########                                                                                \n"); 
+printf("         ##     ##      ## ##                                                                                      \n");
+printf("         ##     ##      ## #########                                                                               \n");
+
+printf("                                                                                                                   \n"); 
+printf("                 ########## ########## ########## ########## ########## ##########                                 \n"); 
+printf("                 ##         ##         ##      ## ##      ## ##             ##                                     \n"); 
+printf("                 ########## ##         ########## ########## ##########     ##                                     \n"); 
+printf("                         ## ##         ##      ## ##                 ##     ##                                     \n"); 
+printf("                 ########## ########## ##      ## ##         ##########     ##                                     \n");
+printf("                                                                                                                   \n");
+
+    printf("                             \n1 - JOGAR \n2 - INTRUCOES \n3 - SAIR\n");
+    scanf("%d", &opcao);
+    switch (opcao) {
+    case 1:
+        system("clear");
+        seconds=time(NULL);
+        while (1){
+        system("clear");
+        printf("\t   Time:%d\n", timer());
+        move_enemy();
+        printf("                                                                \n");
+        labirinto();
+        printf("\n Aperte (x) para sair do Jogo");
+        scanf("%c", &movimento);
+        if(movimento=='x') break;
          else if(move(movimento) == 1){
           fase+=1;
           i=1;
           j=0;	
    if(fase>3){
-   printf("tempo:%d segundos\n", timer());
-      break;
+     system("clear");
+     printf(" Parabéns, você terminou!!!");
+     printf("tempo:%d segundos", timer());
+        break;
 	}
       }
     }
-
-    return(0);
+        break;
+    case 2:
+        system("clear");
+        printf(" O jogo consiste em um labirinto de três fases. O objetivo do jogo é passar as três fases no menor tempo possível, \n");
+         printf(" e sem tocar no inimigo que se move de forma pseudo aleatória.                                                     \n");
+         printf("                                                                                                                   \n");      
+         printf("                                  -------------------                                                              \n");       
+         printf("                                 | Teclas de Controle|                                                             \n");
+         printf("                                  -------------------                                                         \n");                   
+         printf("                                                                                                                   \n");
+         printf("                                           (W)                                                                     \n");
+         printf("                                       (A)     (D)                                                                 \n");
+         printf("                                           (S)                                                                     \n"); 
+        
+        return;
+    case 3:
+        system("clear");
+        break;
+   
+    }
 }
